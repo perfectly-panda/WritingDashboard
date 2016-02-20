@@ -1,0 +1,16 @@
+{
+  "name": "writers_dashboard",
+  "version": "0.0.0",
+  "description": "test stuff.",
+  "main": "server.js",
+  "repository": "",
+  "author": "Samara Duncan <samarasoucy@gmail.com>",
+  "dependencies": {
+    "async": "~0.2.8",
+    "body-parser": "^1.15.0",
+    "ejs": "^2.4.1",
+    "express": "~4.*.*",
+    "mongoose": "^4.4.4",
+    "socket.io": "~0.9.14"
+  }
+}
