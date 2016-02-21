@@ -1,48 +1,34 @@
 <!doctype html>
 <html lang="en" ng-app="app">
   <head>
-    <title><%= title %></title>
+    <title>Writing Dashboard</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/css/bootstrap-responsive.min.css">
     <script src="/js/jquery.min.js"></script>
-    <script src="/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css"> <!-- load bootstrap css -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css"> <!-- load fontawesome -->
+    <link rel="stylesheet" href="/css/bootstrap-responsive.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular-route.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular-resource.min.js"></script>
   </head>
   <body>
-       <h1><%= title %></h1>
+       <h1>Writing Dashboard</h1>
         
           <ng-view></ng-view>
           
   <!-- Template -->
-    <script type="text/ng-template" id="/Projects.html">
-      Search: <input type="text" ng-model="search.name">
-      <ul>
-        <li ng-repeat="Project in Projects | filter: search">
-          <input type="checkbox" ng-model="Project.completed" ng-change="update($index)">
-          <a ng-show="!editing[$index]" href="#/{{Project._id}}">{{Project.name}}</a>
-          <button ng-show="!editing[$index]" ng-click="edit($index)">edit</button>
-          <button ng-show="!editing[$index]" ng-click="remove($index)">remove</button>
+    <script type="text/ng-template" id="/Welcome.html">
+        <div class="jumbotron text-center">
+            <h1><span class="fa fa-lock"></span> Authentication</h1>
+    
+            <p>Login or Register with:</p>
+    
+            <a href="/login" class="btn btn-default"><span class="fa fa-user"></span> Local Login</a>
+            <a href="/signup" class="btn btn-default"><span class="fa fa-user"></span> Local Signup</a>
+        </div>
 
-          <input ng-show="editing[$index]" type="text" ng-model="Project.name">
-          <button ng-show="editing[$index]" ng-click="update($index)">update</button>
-          <button ng-show="editing[$index]" ng-click="cancel($index)">cancel</button>
-        </li>
-      </ul>
-      New task <input type="text" ng-model="newProject"><button ng-click="save()">Create</button>
     </script>
 
-    <script type="text/ng-template" id="/ProjectDetails.html">
-      <h1>{{ Project.name }}</h1>
-      completed: <input type="checkbox" ng-model="Project.completed"><br>
-      note: <textarea ng-model="Project.note"></textarea><br><br>
-
-      <button ng-click="update()">update</button>
-      <button ng-click="remove()">remove</button>
-      <a href="/">Cancel</a>
-    </script>
 
     <script>
       angular.module('app', ['ngRoute', 'ngResource'])
@@ -61,58 +47,11 @@
         // Controllers
         //---------------
 
-        .controller('ProjectController', ['$scope', 'Projects', function ($scope, Projects) {
-          $scope.editing = [];
-          $scope.Projects = Projects.query();
+        .controller('WelcomeController', ['$scope', 'Welcome', function ($scope) {
 
-          $scope.save = function(){
-            if(!$scope.newProject || $scope.newProject.length < 1) return;
-            var Project = new Projects({ name: $scope.newProject, completed: false });
-
-            Project.$save(function(){
-              $scope.Projects.push(Project);
-              $scope.newProject = ''; // clear textbox
-            });
-          }
-
-          $scope.update = function(index){
-            var Project = $scope.Projects[index];
-            Projects.update({id: Project._id}, Project);
-            $scope.editing[index] = false;
-          }
-
-          $scope.edit = function(index){
-            $scope.editing[index] = angular.copy($scope.Projects[index]);
-          }
-
-          $scope.cancel = function(index){
-            $scope.Projects[index] = angular.copy($scope.editing[index]);
-            $scope.editing[index] = false;
-          }
-
-          $scope.remove = function(index){
-            var Project = $scope.Projects[index];
-            Projects.remove({id: Project._id}, function(){
-              $scope.Projects.splice(index, 1);
-            });
-          }
         }])
 
-        .controller('ProjectDetailCtrl', ['$scope', '$routeParams', 'Projects', '$location', function ($scope, $routeParams, Projects, $location) {
-          $scope.Project = Projects.get({id: $routeParams.id });
-
-          $scope.update = function(){
-            Projects.update({id: $scope.Project._id}, $scope.Project, function(){
-              $location.url('/');
-            });
-          }
-
-          $scope.remove = function(){
-            Projects.remove({id: $scope.Project._id}, function(){
-              $location.url('/');
-            });
-          }
-        }])
+        
 
         //---------------
         // Routes
@@ -121,14 +60,11 @@
         .config(['$routeProvider', function ($routeProvider) {
           $routeProvider
             .when('/', {
-              templateUrl: '/Projects.html',
-              controller: 'ProjectController'
+              templateUrl: '/Welcome.html',
+              controller: 'WelcomeController'
             })
 
-            .when('/:id', {
-              templateUrl: '/ProjectDetails.html',
-              controller: 'ProjectDetailCtrl'
-           });
+            ;
         }]);
     </script>
   </body>
