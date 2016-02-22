@@ -1,7 +1,33 @@
 <div class="jumbotron text-center">
-    <h3>Projects Home</h1>
-
-    
-
-
+    <h3>Projects</h1>
 </div>
+
+<!-- FORM TO CREATE projectS -->
+<div id="project-form" class="row">
+    <div class="col-sm-8 col-sm-offset-2 text-center">
+        <form>
+            <div class="form-group row">
+                <!-- createproject() WILL CREATE NEW projectS -->
+                <button type="submit" class="btn btn-primary btn-lg col-sm-2" ng-click="createProject()">Add</button>
+
+                <!-- BIND THIS VALUE TO formData.text IN ANGULAR -->
+                <input type="text" class="input-lg text-center col-sm-5 col-sm-offset-1" placeholder="" ng-model="formData.name">
+            </div>
+        </form>
+    </div>
+</div>
+
+ <!-- project LIST -->
+<div id="project-list" class="row">
+    <div class="col-sm-4 col-sm-offset-4">
+
+        <!-- LOOP OVER THE projectS IN $scope.projects -->
+        <div class="checkbox" ng-repeat="project in projects">
+            <label>
+                <input type="checkbox" ng-click="deleteProject(project._id)"> {{ project.name }}
+            </label>
+        </div>
+
+    </div>
+</div>
+

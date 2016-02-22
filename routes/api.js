@@ -12,20 +12,28 @@ router.get('/api/projects/', isLoggedIn,  function(req, res, next) {
     res.json(projects);
   });
 });
+
 router.post('/api/projects/', isLoggedIn, function(req, res, next) {
   var user   = req.user;
-  var project = new Project({ _user: user._id, name: req.params.name });
+  
+  var project = new Project({ _user: user._id, name: req.body.name });
   
   project.save(function (err, post) {
-   if (err) return next(err);
-    res.json(post);
+    if (err) return next(err);
+    Project.find({'_user': user._id},function (err, projects) {
+      if (err) return next(err);
+      res.json(projects);
+    });
   });
 });
 
 /* GET /todos/id */
 router.get('/api/projects/:id', isLoggedIn, function(req, res, next) {
   var user          = req.user;
-  Project.findById(req.params.id, function (err, post) {
+  Project
+   .where('_user').equals(user._id)
+  .findById(req.params.id)
+  .exec( function (err, post) {
     if (err) return next(err);
     res.json(post);
   });
@@ -33,7 +41,7 @@ router.get('/api/projects/:id', isLoggedIn, function(req, res, next) {
 
 router.put('/api/projects/:id', isLoggedIn, function(req, res, next) {
   var user          = req.user;
-  Project.findByIdAndUpdate(req.params.id, req.body, function (err, post) {
+  Project.findByIdAndUpdate(req.body.id, req.body, function (err, post) {
     if (err) return next(err);
     res.json(post);
   });
@@ -41,9 +49,13 @@ router.put('/api/projects/:id', isLoggedIn, function(req, res, next) {
 
 router.delete('/api/projects/:id', isLoggedIn, function(req, res, next) {
   var user          = req.user;
-  Project.findByIdAndRemove(req.params.id, req.body, function (err, post) {
+  console.log(req)
+  Project.findByIdAndRemove(req.params.id, function (err, post) {
     if (err) return next(err);
-    res.json(post);
+    Project.find({'_user': user._id},function (err, projects) {
+      if (err) return next(err);
+      res.json(projects);
+    });
   });
 });
 };
