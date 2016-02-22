@@ -1,0 +1,20 @@
+html, body {
+    height: 100%;
+}
+
+.fill {
+    height: 100%;
+    min-height:100%;
+}
+
+#sidebar {
+    background-color: 	#6495ED;
+}
+
+#sidebar a:link, #sidebar a:visited {
+    color: black;
+}
+
+#body {
+    background-color: #F0FFFF;
+}

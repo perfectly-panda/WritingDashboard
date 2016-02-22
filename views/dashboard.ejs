@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en" ng-app="app">
+  <head>
+    <title>Writing Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="/js/jquery.min.js"></script>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css"> <!-- load bootstrap css -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css"> <!-- load fontawesome -->
+    <link rel="stylesheet" href="/css/bootstrap-responsive.min.css">
+    <link rel="stylesheet" href="/css/site.css">
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular-route.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular-resource.min.js"></script>
+    <script src="js/controllers.js"></script>
+    <script src="js/app.js"></script>
+  </head>
+  <body>
+      <div class="container fill">
+        <div class="row">
+              <header id="header" class="container">
+                 <h1>Writing Dashboard</h1>
+              </header>
+        </div>
+     
+          <div class="row fill">
+              <nav id="sidebar" class="col-xs-3 col-sm-2 sidebar fill">
+                <h2>Menu</h2>
+                <ul class="nav">
+                    <li><a href="#/">Home</a></li>
+                    <li><a href="#/Projects">Projects</a></li>
+                </ul>
+              </nav> 
+              
+               <div id="body" class="col-xs-9 col-sm-10  fill">
+                   <ng-view></ng-view>
+               </div>
+           </div>
+       </div>
+        
+  </body>
+</html>
